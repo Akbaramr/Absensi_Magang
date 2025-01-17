@@ -1,4 +1,22 @@
-<?php require_once ('../config.php') ?>
+<?php
+session_start();
+
+ require_once ('../config.php');
+
+ if (isset($_POST["login"])){
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $result = mysqli_query($connection, "SELECT * FROM users JOIN mahasiswa ON users.
+    id_mahasiswa = mahasiswa.id WHERE username = '$username'");
+
+    if (mysqli_num_rows($result) === 1){
+    }else{  
+        $_SESSION["gagal"] = "Username salah, silahkan coba lagi";
+    }
+ }
+ 
+ ?>
 <!doctype html>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
@@ -53,7 +71,7 @@
                         Password
                       </label>
                       <div class="input-group input-group-flat">
-                        <input type="password" class="form-control"  placeholder="Password"  autocomplete="off">
+                      <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="off"> 
                         <span class="input-group-text">
                           <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
@@ -90,6 +108,13 @@
 
     <!-- alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "<?= $_SESSION['gagal']; ?>",  
+        });
+    </script>
 
   </body>
 </html
