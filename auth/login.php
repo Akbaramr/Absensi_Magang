@@ -11,7 +11,36 @@ session_start();
     id_mahasiswa = mahasiswa.id WHERE username = '$username'");
 
     if (mysqli_num_rows($result) === 1){
-    }else{  
+      $row = mysqli_fetch_assoc($result);
+
+      if (password_verify($password,$row["password"])){
+        if ($row['status'] == 'Aktif'){
+
+          $_SESSION["login"] = true;
+          $_SESSION['id'] = $row['id'];
+          $_SESSION['role'] = $row['role'];
+          $_SESSION['nama'] = $row['nama'];
+          $_SESSION['nim'] = $row['nim'];
+          $_SESSION['divisi'] = $row['divisi'];
+          $_SESSION['lokasi_presensi'] = $row['lokasi_presensi'];
+
+          if($row['role'] === 'admin'){
+            header("Location: ../admin/home/home.php");
+            exit();
+          }else{
+            header("Location: ../mahasiswa/home/home.php");
+            exit(); 
+          }
+
+        }else{
+          $_SESSION["gagal"] = "Akun Anda belum aktif";
+        }
+
+      } else{
+        $_SESSION["gagal"] = "Password salah, silahkan coba lagi";
+      }
+
+    } else{  
         $_SESSION["gagal"] = "Username salah, silahkan coba lagi";
     }
  }
@@ -56,6 +85,17 @@ session_start();
               <div class="text-center mb-4">
                 <a href="." class="navbar-brand navbar-brand-autodark"><img src="<?= base_url('assets/img/LOGO_PN_MAKASSAR (1).png') ?>" height="66" alt=""></a>
               </div>
+
+              <?php
+              if (isset($_GET['pesan'])){
+                if ($_GET['pesan'] == "belum_login"){
+                  $_SESSION['gagal'] = 'Anda belum login';
+
+                } else if ($_GET['pesan'] == "tolak_akses"){
+                  $_SESSION['gagal'] = 'Akses ke halaman ini ditolak';
+                }
+              }
+              ?>
 
        
               <div class="card card-md">
@@ -107,6 +147,7 @@ session_start();
     <script src="<?= base_url('assets/js/demo.min.js?1692870487') ?>" defer></script>
 
     <!-- alert -->
+    <?php if($_SESSION['gagal']) { ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Swal.fire({
@@ -115,6 +156,10 @@ session_start();
         text: "<?= $_SESSION['gagal']; ?>",  
         });
     </script>
+
+    <?php unset($_SESSION['gagal']); ?>
+  
+    <?php } ?>
 
   </body>
 </html
