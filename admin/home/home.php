@@ -7,7 +7,7 @@ if (!isset($_SESSION["login"])){
 } 
 
 
-
+$judul = "Home";
 include('../layout/header.php'); ?>
         <!-- Page body -->
         <div class="page-body">

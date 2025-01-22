@@ -22,6 +22,7 @@ session_start();
           $_SESSION['nama'] = $row['nama'];
           $_SESSION['nim'] = $row['nim'];
           $_SESSION['divisi'] = $row['divisi'];
+          $_SESSION['universitas'] = $row['universitas'];
           $_SESSION['lokasi_presensi'] = $row['lokasi_presensi'];
 
           if($row['role'] === 'admin'){
@@ -146,9 +147,10 @@ session_start();
     <script src="<?= base_url('assets/js/tabler.min.js?1692870487') ?>" defer></script>
     <script src="<?= base_url('assets/js/demo.min.js?1692870487') ?>" defer></script>
 
-    <!-- alert -->
-    <?php if($_SESSION['gagal']) { ?>
+    <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php if($_SESSION['gagal']) { ?>
     <script>
         Swal.fire({
         icon: "error",

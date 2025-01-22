@@ -1,4 +1,6 @@
-<?php require_once ('../../config.php') ?>
+<?php 
+global $judul;
+require_once ('../../config.php') ?>
 
 <!doctype html>
 <html lang="en">
@@ -11,6 +13,12 @@
     <link href="<?php echo base_url('assets/css/tabler.min.css'); ?>" rel="stylesheet"/>
     <link href="<?php echo base_url('assets/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
     <link href="<?php echo base_url('assets/css/demo.min.css'); ?>" rel="stylesheet"/>
+    
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -143,7 +151,7 @@
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                 <a href="#" class="dropdown-item">Profile</a>
                 <a href="./profile.html" class="dropdown-item">Ubah Password</a>
-                <a href="#" class="dropdown-item">Logout</a>
+                <a href="<?= base_url('auth/logout.php') ?>" class="dropdown-item">Logout</a>
               </div>
             </div>
           </div>
@@ -155,9 +163,15 @@
             <div class="container-xl">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link" href="./" >
+                  <a class="nav-link" href="<?= base_url('admin/home/home.php')?>" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" 
+                      stroke="currentColor" fill="none" stroke-linecap="round" 
+                      stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                      <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                      <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                      </svg>
                     </span>
                     <span class="nav-link-title">
                       Home
@@ -165,9 +179,19 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="./" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-users"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                  <a class="nav-link" href="<?= base_url('admin/data_mahasiswa/mahasiswa.php')?>" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                    <svg  xmlns="http://www.w3.org/2000/svg" class="icon 
+                    icon-tabler icon-tabler-users" width="24"  height="24"  
+                    viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  
+                    stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
+                      </svg>
                     </span>
                     <span class="nav-link-title">
                       Mahasiswa
@@ -186,10 +210,10 @@
                   <div class="dropdown-menu">
                     <div class="dropdown-menu-columns">
                       <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./alerts.html">
-                          Divisi
+                        <a class="dropdown-item" href="<?= base_url('admin/data_jabatan/jabatan.php')?>">
+                          Jabatan
                         </a>
-                        <a class="dropdown-item" href="./accordion.html">
+                        <a class="dropdown-item" href="<?= base_url('admin/data_lokasi_presensi/lokasi.php')?>">
                           Lokasi Presensi
                         </a>
                       </div>
@@ -208,10 +232,10 @@
                   <div class="dropdown-menu">
                     <div class="dropdown-menu-columns">
                       <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./alerts.html">
+                        <a class="dropdown-item" href="<?= base_url('admin/rekap_presensi/rekap_harian.php')?>">
                           Rekap Harian
                         </a>
-                        <a class="dropdown-item" href="./accordion.html">
+                        <a class="dropdown-item" href="<?= base_url('admin/rekap_presensi/rekap_bulanan.php')?>">
                           Rekap Bulanan
                         </a>
                       </div>
@@ -220,9 +244,19 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="./form-elements.html" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M10 12l4 4m0 -4l-4 4" /></svg>
+                  <a class="nav-link" href="<?= base_url('admin/data_ketidakhadiran/ketidakhadiran.php')?>" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  
+                      viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  
+                      stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+                  </svg>
+                    <!--class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-x"> -->
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                    <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                    <path d="M10 12l4 4m0 -4l-4 4" />
+                  </svg>
                     </span>
                     <span class="nav-link-title">
                       Ketidakhadiran
@@ -231,7 +265,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="./form-elements.html" >
+                  <a class="nav-link" href="<?= base_url('auth/logout.php') ?>" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
                     </span>
@@ -252,7 +286,7 @@
             <div class="row g-2 align-items-center">
               <div class="col">
                 <h2 class="page-title">
-                  Dashboard
+                  <?= $judul ?>
                 </h2>
               </div>
             </div>
