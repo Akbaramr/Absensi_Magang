@@ -11,7 +11,3 @@ id=$id");
 $_SESSION['berhasil'] = 'Data berhasil dihapus';
 header("Location: jabatan.php");
 exit;
-
-include('../layout/footer.php');
-
-?>
