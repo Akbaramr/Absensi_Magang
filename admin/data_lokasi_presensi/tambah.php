@@ -28,41 +28,36 @@ if (isset($_POST['submit'])) {
         $pesan_kesalahan = []; // Ubah menjadi array
 
         if (empty($nama_lokasi)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Nama Lokasi Wajib Diisi";
+            $pesan_kesalahan[] = "Nama Lokasi Wajib Diisi";
         }
         if (empty($alamat_lokasi)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Alamat Lokasi Wajib Diisi";
+            $pesan_kesalahan[] = "Alamat Lokasi Wajib Diisi";
         }
         if (empty($tipe_lokasi)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Tipe Lokasi Wajib Diisi";
+            $pesan_kesalahan[] = "Tipe Lokasi Wajib Diisi";
         }
         if (empty($latitude)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Latitude Wajib Diisi";
+            $pesan_kesalahan[] = "Latitude Wajib Diisi";
         }
         if (empty($longitude)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Longitude Wajib Diisi";
+            $pesan_kesalahan[] = "Longitude Wajib Diisi";
         }
         if (empty($radius)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Radius Wajib Diisi";
+            $pesan_kesalahan[] = "Radius Wajib Diisi";
         }
         if (empty($zona_waktu)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Zona Waktu Wajib Diisi";
+            $pesan_kesalahan[] = "Zona Waktu Wajib Diisi";
         }
         if (empty($jam_masuk)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Jam Masuk Wajib Diisi";
+            $pesan_kesalahan[] = "Jam Masuk Wajib Diisi";
         }
         if (empty($jam_pulang)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Jam Pulang Wajib Diisi";
+            $pesan_kesalahan[] = "Jam Pulang Wajib Diisi";
         }
 
         if (!empty($pesan_kesalahan)) {
-            $pesan_format = "<ul>";
-            foreach ($pesan_kesalahan as $pesan) {
-                $pesan_format .= "<li>$pesan</li>";
-            }
-            $pesan_format .= "</ul>";
-            $_SESSION['validasi'] = $pesan_format;
-        }else {
+            $_SESSION['validasi'] = $pesan_kesalahan;
+        } else {
             // Query Insert Data
             $result = mysqli_query($connection, "INSERT INTO lokasi_presensi 
                 (nama_lokasi, alamat_lokasi, tipe_lokasi, latitude, longitude, radius, zona_waktu, jam_masuk, jam_pulang) 
@@ -82,15 +77,18 @@ if (isset($_POST['submit'])) {
 
 <div class="page-body">
     <div class="container-xl">
-    <?php 
-        if (isset($_SESSION['validasi'])): ?>
-            <div class="alert alert-danger fade show" role="alert">
-                <ul>
-                    <?= $_SESSION['validasi']; ?>
-                </ul>
-            </div>
-            <?php unset($_SESSION['validasi']); // Hapus setelah ditampilkan ?>
-    <?php endif; ?>
+        <?php if (isset($_SESSION['validasi'])): ?>
+            <script>
+                const errors = <?= json_encode($_SESSION['validasi']); ?>;
+                Swal.fire({
+                    title: 'Validasi Gagal',
+                    html: errors.map(error => `<li>${error}</li>`).join(''),
+                    icon: 'error',
+                });
+            </script>
+            <?php unset($_SESSION['validasi']); ?>
+        <?php endif; ?>
+
         <div class="card col-md-6">
             <div class="card-body">
                 <form action="<?= base_url('admin/data_lokasi_presensi/tambah.php') ?>" method="POST">

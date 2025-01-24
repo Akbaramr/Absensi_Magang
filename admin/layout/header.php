@@ -20,6 +20,28 @@ require_once ('../../config.php') ?>
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
+      .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5); /* Efek transparan */
+          z-index: 9998; /* Pastikan di atas elemen lainnya */
+      }
+
+      .modal-dialog {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 9999; /* Modal harus berada di atas overlay */
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
       @import url('https://rsms.me/inter/inter.css');
       :root {
         --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
@@ -213,7 +235,7 @@ require_once ('../../config.php') ?>
                         <a class="dropdown-item" href="<?= base_url('admin/data_jabatan/jabatan.php')?>">
                           Jabatan
                         </a>
-                        <a class="dropdown-item" href="<?= base_url('admin/data_lokasi_presensi/lokasi.php')?>">
+                        <a class="dropdown-item" href="<?= base_url('admin/data_lokasi_presensi/lokasi_presensi.php')?>">
                           Lokasi Presensi
                         </a>
                       </div>

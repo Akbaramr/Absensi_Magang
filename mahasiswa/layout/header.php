@@ -110,7 +110,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="list-group-item">
+                         <div class="list-group-item">
                         <div class="row align-items-center">
                           <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
                           <div class="col text-truncate">
