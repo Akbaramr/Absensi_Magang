@@ -67,11 +67,7 @@ if (isset($_POST['edit'])) {
         }
     }
 
-
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $pesan_kesalahan = [];
-
         if (empty($nama)) {
             $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Nama Wajib Diisi";
         }
@@ -118,7 +114,7 @@ if (isset($_POST['edit'])) {
         if (!empty($pesan_kesalahan)) {
             $_SESSION['validasi'] = implode("<br>", $pesan_kesalahan);
         } else {
-            // Query Insert Data
+        
                 $mahasiswa = mysqli_query($connection, "UPDATE mahasiswa SET
                     nama ='$nama',
                     jenis_kelamin ='$jenis_kelamin',
@@ -141,8 +137,8 @@ if (isset($_POST['edit'])) {
                 exit;
                
             } 
-        }
     }
+}
 
 $id = isset($_GET['id']) ? $_GET['id'] :   $_POST['id'];
 $result = mysqli_query($connection, "SELECT users.id_mahasiswa, users.username, users.password, users.status, users.role,
@@ -153,13 +149,12 @@ while ($mahasiswa = mysqli_fetch_array($result)) {
     $jenis_kelamin = $mahasiswa['jenis_kelamin'];
     $alamat = $mahasiswa['alamat'];
     $no_handphone = $mahasiswa['no_handphone'];
-    $jabatan = $mahasiswa['jabatan'];
+    $divisi = $mahasiswa['divisi'];
     $username = $mahasiswa['username'];
     $password = $mahasiswa['password'];
     $status = $mahasiswa['status'];
     $lokasi_presensi = $mahasiswa['lokasi_presensi'];
     $role = $mahasiswa['role'];
-    $divisi = $mahasiswa['divisi'];
     $foto = $mahasiswa['foto'];
     $nim = $mahasiswa['nim'];
     $universitas = $mahasiswa['universitas'];
