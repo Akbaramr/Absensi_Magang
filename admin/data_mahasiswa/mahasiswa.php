@@ -21,16 +21,18 @@ mahasiswa.* FROM users JOIN mahasiswa ON users.id_mahasiswa = mahasiswa.id");
         </a>
         
         <table class="table table-bordered mt-3">
+            <thead>
                 <tr class="text-center">
                     <th>No</th>
                     <th>NIM</th>
                     <th>Nama</th>
                     <th>Username</th>
-                    <th>Jabatan</th>
+                    <th>Divisi</th>
                     <th>Role</th>
                     <th>Aksi</th>
                 </tr>
-
+            </thead>
+            <tbody>
                 <?php if (mysqli_num_rows($result) == 0) { ?>
                     <tr>
                         <td colspan="7" class="text-center">Data Kosong, Silahkan tambahkan data baru</td>
@@ -43,17 +45,17 @@ mahasiswa.* FROM users JOIN mahasiswa ON users.id_mahasiswa = mahasiswa.id");
                             <td><?= $mahasiswa['nim'] ?></td>
                             <td><?= $mahasiswa['nama']?></td>
                             <td><?= $mahasiswa['username']?></td>
-                            <td><?= $mahasiswa['jabatan']?></td>
+                            <td><?= $mahasiswa['divisi']?></td>
                             <td><?= $mahasiswa['role']?></td>
                             <td class="text-center">
-                                <a href="<?= base_url('admin/data_mahasiswa/detail.php?id=' . $mahasiswa
-                                ['id']) ?>" class="badge badge-pill bg-primary">Detail</a>
+                                <a href="<?= base_url('admin/data_mahasiswa/detail.php?id=' . $mahasiswa['id']) ?>" 
+                                   class="badge badge-pill bg-primary">Detail</a>
 
-                                <a href="<?= base_url('admin/data_mahasiswa/edit.php?id=' . $mahasiswa
-                                ['id']) ?>" class="badge badge-pill bg-primary">Edit</a>
+                                <a href="<?= base_url('admin/data_mahasiswa/edit.php?id=' . $mahasiswa['id']) ?>" 
+                                   class="badge badge-pill bg-primary">Edit</a>
 
-                                <a href="<?= base_url('admin/data_mahasiswa/hapus.php?id=' . $mahasiswa
-                                ['id']) ?>" class="badge badge-pill bg-danger tombol-hapus">Hapus</a>
+                                <a href="<?= base_url('admin/data_mahasiswa/hapus.php?id=' . $mahasiswa['id']) ?>" 
+                                   class="badge badge-pill bg-danger tombol-hapus">Hapus</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
