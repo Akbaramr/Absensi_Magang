@@ -8,7 +8,13 @@ if (!isset($_SESSION["login"])){
 
 
 $judul = "Home";
-include('../layout/header.php'); ?>
+include('../layout/header.php'); 
+$mahasiswa = mysqli_query($connection, "SELECT mahasiswa.*, users.status FROM mahasiswa JOIN users ON 
+mahasiswa.id = users.id_mahasiswa WHERE status = 'Aktif'");
+$total_mahasiswa_aktif = mysqli_num_rows($mahasiswa);
+
+
+?>
         <!-- Page body -->
         <div class="page-body">
           <div class="container-xl">
@@ -21,15 +27,22 @@ include('../layout/header.php'); ?>
                         <div class="row align-items-center">
                           <div class="col-auto">
                             <span class="bg-primary text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" /><path d="M12 3v3m0 12v3" /></svg>
+                              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  
+                              height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  
+                              stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
+                              class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                              </svg>
                             </span>
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              132 Sales
+                              Total Mahasiswa aktif
                             </div>
                             <div class="text-secondary">
-                              12 waiting payments
+                                <?= $total_mahasiswa_aktif . ' Mahasiswa'?>
                             </div>
                           </div>
                         </div>
@@ -42,15 +55,20 @@ include('../layout/header.php'); ?>
                         <div class="row align-items-center">
                           <div class="col-auto">
                             <span class="bg-green text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
-                            </span>
+                              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                <path d="M15 19l2 2l4 -4" /></svg>
+                              </span>
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              78 Orders
+                              Jumlah Hadir
                             </div>
                             <div class="text-secondary">
-                              32 shipped
+                              0 Mahasiswa (Belum code) 
                             </div>
                           </div>
                         </div>
@@ -63,15 +81,20 @@ include('../layout/header.php'); ?>
                         <div class="row align-items-center">
                           <div class="col-auto">
                             <span class="bg-twitter text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z" /></svg>
-                            </span>
+                              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-x">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" />
+                                <path d="M22 22l-5 -5" />
+                                <path d="M17 22l5 -5" /></svg>
+                              </span>
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              623 Shares
+                              Jumlah Alpa
                             </div>
                             <div class="text-secondary">
-                              16 today
+                              0 Mahasiswa (Belum code) 
                             </div>
                           </div>
                         </div>
@@ -84,15 +107,21 @@ include('../layout/header.php'); ?>
                         <div class="row align-items-center">
                           <div class="col-auto">
                             <span class="bg-facebook text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-facebook -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg>
+                              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-question">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" />
+                                <path d="M19 22v.01" />
+                                <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" />
+                              </svg>
                             </span>
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              132 Likes
+                              Jumlah Sakit, Izin & Cuti
                             </div>
                             <div class="text-secondary">
-                              21 today
+                              0 Mahasiswa (Belum code) 
                             </div>
                           </div>
                         </div>
