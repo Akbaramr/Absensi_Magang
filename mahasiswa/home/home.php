@@ -19,7 +19,13 @@ while($lokasi = mysqli_fetch_array($result)){
     $radius = $lokasi['radius'];
     $zona_waktu = $lokasi['zona_waktu'];
 }
-
+if($zona_waktu=='WITA'){
+  date_default_timezone_set('Asia/Makassar');
+}elseif(zona_waktu=='WIB'){
+  date_default_timezone_set('Asia/Jakarta');
+}elseif(zona_waktu=='WIT'){
+  date_default_timezone_set('Asia/Jayapura');
+}
 ?>
 
 <style>
@@ -72,14 +78,17 @@ while($lokasi = mysqli_fetch_array($result)){
                       <div id="detik_masuk"></div>
                     </div>
 
-                    <form method="POST" action="<?= base_url('mahasiswa/presensi/presensi_masuk.
-                    php')?>">
-                    <input type="text" value="<?= $latitude_kantor ?>" name="latitude_kantor">
-                    <input type="text" value="<?= $longitude_kantor ?>" name="longitude_kantor">
-                    <input type="text" value="<?= $radius ?>" name="radius">
-                    <input type="text" value="<?= $zona_waktu ?>" name="zona_waktu">
+                    <form method="POST" action="<?= base_url('mahasiswa/presensi/presensi_masuk.php')?>">
+                    <input type="hidden" name="latitude_mahasiswa" id="latitude_mahasiswa">
+                    <input type="hidden" name="longitude_mahasiswa" id="longitude_mahasiswa">
+                    <input type="hidden" value="<?= $latitude_kantor ?>" name="latitude_kantor">
+                    <input type="hidden" value="<?= $longitude_kantor ?>" name="longitude_kantor">
+                    <input type="hidden" value="<?= $radius ?>" name="radius">
+                    <input type="hidden" value="<?= $zona_waktu ?>" name="zona_waktu">
+                    <input type="hidden" value="<?=date('Y-m-d')?>" name="tanggal_masuk">
+                    <input type="hidden" value="<?=date('H:i:s')?>" name="jam_masuk">
 
-                      <button type="submit" class="btn btn-primary mt-3">Masuk</button> 
+                      <button type="submit" name="tombol_masuk"class="btn btn-primary mt-3">Masuk</button> 
                     </form>
                 </div>
                 
@@ -162,8 +171,7 @@ while($lokasi = mysqli_fetch_array($result)){
           function showPosition(position)
           {
             $('#latitude_mahasiswa').val(position.coords.latitude);
-            $('#latitude_mahasiswa').val(position.coords.latitude);
-            $('#latitude_mahasiswa').val(position.coords.latitude);
+            $('#longitude_mahasiswa').val(position.coords.longitude);
           }
         </script>
 
