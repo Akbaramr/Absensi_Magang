@@ -31,8 +31,8 @@ if(isset($_POST['tombol_masuk'])){
     $zona_waktu = $_POST;['zona_waktu'];
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $jam_masuk = $_POST['jam_masuk'];
-
 }
+ 
 $perbedaan_koordinat = $longitude_kantor - $longitude_mahasiswa;
 $jarak = sin(deg2rad($latitude_mahasiswa)) * sin(deg2rad($latitude_kantor)) + cos(deg2rad($latitude_mahasiswa)) * cos(deg2rad($latitude_kantor)) * cos(deg2rad($perbedaan_koordinat));
 $jarak = acos($jarak);
@@ -42,6 +42,7 @@ $jarak_km = $mil *1.609344;
 $jarak_meter = $jarak_km * 1000;
 ?>
 <?php  { ?>
+
     <div class="page-body">
           <div class="container-xl">
             <div class="row">
@@ -59,7 +60,7 @@ $jarak_meter = $jarak_km * 1000;
             <input type="hidden" id ="id" value="<?= $_SESSION['id'] ?>">
             <input type="hidden" id ="tanggal_masuk" value="<?=$tanggal_masuk ?>">
             <input type="hidden" id ="jam_masuk" value="<?=$jam_masuk ?>">
-            <div id="my_camera" style="width:320px; height:240px;"></div>
+            <div id="my_camera"></div>
             <div id="my_result"></div>
             <div><?= date('d F Y',strtotime($tanggal_masuk)) . ' - '. $jam_masuk ?></div>
             <button class="btn btn-primary mt-2" id="ambil_foto">Masuk</button>
@@ -77,14 +78,16 @@ $jarak_meter = $jarak_km * 1000;
     dest_height: 240,
     image_format: 'jpeg',
     jpeg_quality: 90,
-    force_flash: false
+    force_flash: false 
 });
     Webcam.attach( '#my_camera' );
     
    document.getElementById('ambil_foto').addEventListener('click',function(){
-    let id= document.getElementById('id').value;
+
+    let id = document.getElementById('id').value;
     let tanggal_masuk= document.getElementById('tanggal_masuk').value;
     let jam_masuk= document.getElementById('jam_masuk').value;
+
         Webcam.snap( function(data_uri) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -101,19 +104,22 @@ $jarak_meter = $jarak_km * 1000;
     '&tanggal_masuk='+ tanggal_masuk + 
     '&jam_masuk='+ jam_masuk 
   );
-        } );
+        });
     });
     // #map leaflet js
     let latitude_ktr = <?= $latitude_kantor ?>;
     let longitude_ktr = <?= $longitude_kantor ?>;
     let latitude_mhs = <?= $latitude_mahasiswa ?>;
     let longitude_mhs = <?= $longitude_mahasiswa ?>;
+
     let map = L.map('map').setView([latitude_ktr, longitude_ktr], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
 var marker = L.marker([latitude_ktr,longitude_ktr]).addTo(map);
+
 var circle = L.circle([latitude_mhs, longitude_mhs], {
     color: 'red',
     fillColor: '#f03',
@@ -121,6 +127,7 @@ var circle = L.circle([latitude_mhs, longitude_mhs], {
     radius: 500
 }).addTo(map).bindPopup("Lokasi Anda Saat Ini").openPopup();
 </script>
-<a href="javascript:void(take_snapshot())">Take Snapshot</a>
-<?php
-}
+
+<?php } ?>
+
+<?php  include('../layout/footer.php')?>

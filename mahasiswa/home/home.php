@@ -21,11 +21,12 @@ while($lokasi = mysqli_fetch_array($result)){
 }
 if($zona_waktu=='WITA'){
   date_default_timezone_set('Asia/Makassar');
-}elseif(zona_waktu=='WIB'){
+}elseif($zona_waktu=='WIB'){
   date_default_timezone_set('Asia/Jakarta');
-}elseif(zona_waktu=='WIT'){
+}elseif($zona_waktu=='WIT'){ 
   date_default_timezone_set('Asia/Jayapura');
 }
+
 ?>
 
 <style>
@@ -36,9 +37,6 @@ if($zona_waktu=='WITA'){
     text-align: center;
     justify-content: center;
   }
-</style>
-
-<style>
   .parent_clock{
     display: grid;
     grid-template-columns: auto auto auto auto auto;
@@ -60,8 +58,20 @@ if($zona_waktu=='WITA'){
                 <div class="card text-center">
                   <div class="card-header">Presensi Masuk</div>
                   <div class="card-body"></div>
+
+                  <?php 
+                  $id_mahasiswa = $_SESSION['id'];
+                  $tanggal_hari_ini = date('Y-m-d');
+                  
+                  $cek_presensi_masuk = mysqli_query($connection, "SELECT * FROM presensi 
+                  WHERE id_mahasiswa = '$id_mahasiswa' AND tanggal_masuk = '$tanggal_hari_ini'");
+                  ?>
+
+                  <?php if(mysqli_num_rows($cek_presensi_masuk) == 0) { ?>
+
+
                     <div class="parent_date">
-                      <div id="tanggal_masuk"></div>
+                      <div id="tanggal_masuk"></div>  
                       <div class="ms-2"></div>
                       <div id="bulan_masuk"></div>
                       <div class="ms-2"></div>
@@ -90,6 +100,12 @@ if($zona_waktu=='WITA'){
 
                       <button type="submit" name="tombol_masuk"class="btn btn-primary mt-3">Masuk</button> 
                     </form>
+                    <?php }else{ ?>
+                      <i class="fa-regular fa-circle-check fa-4x text-success"></i>
+                      <h4 class="my-3">Anda telah melakukan <br>presensi masuk</h4>
+
+                      <?php } ?>
+
                 </div>
                 
               </div>
@@ -114,7 +130,7 @@ if($zona_waktu=='WITA'){
                       <div id="menit_keluar"></div>
                       <div>:</div>
                       <div id="detik_keluar"></div>
-                    </div>
+                    </div>   
                     <form action="">
                       <button type="submit" class="btn btn-danger mt-3">Keluar</button> 
                     </form>
@@ -175,4 +191,4 @@ if($zona_waktu=='WITA'){
           }
         </script>
 
-        <?php include('../layout/footer.php'); ?>
+        <?php include('../layout/footer.php'); ?>  
