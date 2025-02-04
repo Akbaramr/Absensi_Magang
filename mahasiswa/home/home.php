@@ -70,6 +70,7 @@ if($zona_waktu=='WITA'){
 
                   <?php if(mysqli_num_rows($cek_presensi_masuk) == 0) { ?>
 
+
                     <div class="parent_date">
                       <div id="tanggal_masuk"></div>  
                       <div class="ms-2"></div>
@@ -173,6 +174,7 @@ if($zona_waktu=='WITA'){
                       <button type="submit" name="tombol-keluar" class="btn btn-danger mt-3">Keluar</button> 
 
                     </div>   
+                  
 
                     <?php } else { ?>
                       <i class="fa-regular fa-circle-check fa-4x text-success"></i>
@@ -201,7 +203,7 @@ if($zona_waktu=='WITA'){
             document.getElementById("tanggal_masuk").innerHTML = waktu.getDate();
             document.getElementById("bulan_masuk").innerHTML = namaBulan[waktu.getMonth()];
             document.getElementById("tahun_masuk").innerHTML = waktu.getFullYear();
-            document.getElementById("jam_masuk").innerHTML = String(waktu.getHours()).padStart(2, '0');
+            document.getElementById("jam_masuk").innerHTML = waktu.getHours();
             document.getElementById("menit_masuk").innerHTML = waktu.getMinutes();
             document.getElementById("detik_masuk").innerHTML = waktu.getSeconds();
           }
@@ -217,7 +219,7 @@ if($zona_waktu=='WITA'){
             document.getElementById("tanggal_keluar").innerHTML = waktu.getDate();
             document.getElementById("bulan_keluar").innerHTML = namaBulan[waktu.getMonth()];
             document.getElementById("tahun_keluar").innerHTML = waktu.getFullYear();
-            document.getElementById("jam_keluar").innerHTML = String(waktu.getHours()).padStart(2, '0');
+            document.getElementById("jam_keluar").innerHTML = waktu.getHours();
             document.getElementById("menit_keluar").innerHTML = waktu.getMinutes();
             document.getElementById("detik_keluar").innerHTML = waktu.getSeconds();
           }
@@ -239,3 +241,4 @@ if($zona_waktu=='WITA'){
           }
         </script>
 
+        <?php include('../layout/footer.php'); ?>  
