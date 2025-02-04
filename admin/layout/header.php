@@ -257,7 +257,7 @@ require_once ('../../config.php') ?>
                         <a class="dropdown-item" href="<?= base_url('admin/presensi/rekap_harian.php')?>">
                           Rekap Harian
                         </a>
-                        <a class="dropdown-item" href="<?= base_url('admin/rekap_presensi/rekap_bulanan.php')?>">
+                        <a class="dropdown-item" href="<?= base_url('admin/presensi/rekap_bulanan.php')?>">
                           Rekap Bulanan
                         </a>
                       </div>
