@@ -70,11 +70,6 @@ if($zona_waktu=='WITA'){
 
                   <?php if(mysqli_num_rows($cek_presensi_masuk) == 0) { ?>
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                     <div class="parent_date">
                       <div id="tanggal_masuk"></div>  
                       <div class="ms-2"></div>
@@ -105,19 +100,12 @@ if($zona_waktu=='WITA'){
 
                       <button type="submit" name="tombol_masuk"class="btn btn-primary mt-3">Masuk</button> 
                     </form>
-<<<<<<< HEAD
 
-=======
->>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                     <?php }else{ ?>
                       <i class="fa-regular fa-circle-check fa-4x text-success"></i>
                       <h4 class="my-3">Anda telah melakukan <br>presensi masuk</h4>
 
                       <?php } ?>
-<<<<<<< HEAD
-=======
-
->>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                 </div>
                 
               </div>
@@ -169,7 +157,7 @@ if($zona_waktu=='WITA'){
                       <div id="menit_keluar"></div>
                       <div>:</div>
                       <div id="detik_keluar"></div>
-<<<<<<< HEAD
+
                     </div>
                     <form method="POST" action="<?= base_url('mahasiswa/presensi/presensi_keluar.php')?>">
                       <input type="hidden" name="id" value="<?= $cek_presensi_keluar['id'] ?>">
@@ -183,12 +171,8 @@ if($zona_waktu=='WITA'){
                       <input type="hidden" value="<?=date('H:i:s')?>" name="jam_keluar">
 
                       <button type="submit" name="tombol-keluar" class="btn btn-danger mt-3">Keluar</button> 
-=======
+
                     </div>   
-                    <form action="">
-                      <button type="submit" class="btn btn-danger mt-3">Keluar</button> 
->>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
-                    </form>
 
                     <?php } else { ?>
                       <i class="fa-regular fa-circle-check fa-4x text-success"></i>
@@ -217,7 +201,7 @@ if($zona_waktu=='WITA'){
             document.getElementById("tanggal_masuk").innerHTML = waktu.getDate();
             document.getElementById("bulan_masuk").innerHTML = namaBulan[waktu.getMonth()];
             document.getElementById("tahun_masuk").innerHTML = waktu.getFullYear();
-            document.getElementById("jam_masuk").innerHTML = waktu.getHours();
+            document.getElementById("jam_masuk").innerHTML = String(waktu.getHours()).padStart(2, '0');
             document.getElementById("menit_masuk").innerHTML = waktu.getMinutes();
             document.getElementById("detik_masuk").innerHTML = waktu.getSeconds();
           }
@@ -233,7 +217,7 @@ if($zona_waktu=='WITA'){
             document.getElementById("tanggal_keluar").innerHTML = waktu.getDate();
             document.getElementById("bulan_keluar").innerHTML = namaBulan[waktu.getMonth()];
             document.getElementById("tahun_keluar").innerHTML = waktu.getFullYear();
-            document.getElementById("jam_keluar").innerHTML = waktu.getHours();
+            document.getElementById("jam_keluar").innerHTML = String(waktu.getHours()).padStart(2, '0');
             document.getElementById("menit_keluar").innerHTML = waktu.getMinutes();
             document.getElementById("detik_keluar").innerHTML = waktu.getSeconds();
           }
@@ -255,4 +239,3 @@ if($zona_waktu=='WITA'){
           }
         </script>
 
-        <?php include('../layout/footer.php'); ?>  

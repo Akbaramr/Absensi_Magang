@@ -32,22 +32,22 @@ if(isset($_POST['tombol_masuk'])){
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $jam_masuk = $_POST['jam_masuk'];
 }
-<<<<<<< HEAD
+
+
+
+$perbedaan_koordinat = $longitude_kantor - $longitude_mahasiswa;
+$jarak = sin(deg2rad($latitude_mahasiswa)) * sin(deg2rad($latitude_kantor)) + cos(deg2rad($latitude_mahasiswa)) * cos(deg2rad($latitude_kantor)) * cos(deg2rad($perbedaan_koordinat));
 $theta = deg2rad($longitude_kantor - $longitude_mahasiswa);
 $jarak = sin(deg2rad($latitude_mahasiswa)) * sin(deg2rad($latitude_kantor)) + 
          cos(deg2rad($latitude_mahasiswa)) * cos(deg2rad($latitude_kantor)) * cos($theta);
-=======
- 
-$perbedaan_koordinat = $longitude_kantor - $longitude_mahasiswa;
-$jarak = sin(deg2rad($latitude_mahasiswa)) * sin(deg2rad($latitude_kantor)) + cos(deg2rad($latitude_mahasiswa)) * cos(deg2rad($latitude_kantor)) * cos(deg2rad($perbedaan_koordinat));
->>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
 $jarak = acos($jarak);
 $jarak = rad2deg($jarak);
 $mil = $jarak * 60 * 1.1515;
+$jarak_km = $mil *1.609344;
 $jarak_km = $mil * 1.609344;
 $jarak_meter = $jarak_km * 1000;
-
 ?>
+
 <?php  { ?>
 
     <div class="page-body">
