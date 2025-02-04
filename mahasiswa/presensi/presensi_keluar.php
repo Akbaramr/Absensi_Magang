@@ -19,6 +19,7 @@ if (!isset($_SESSION["login"])){
   header("Location: ../../auth/login.php?pesan=tolak_akses");
 } 
 
+$judul = 'Presensi Keluar';
 include('../layout/header.php'); 
 include_once("../../config.php");
 
