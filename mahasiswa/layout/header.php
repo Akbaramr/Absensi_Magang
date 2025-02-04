@@ -12,8 +12,13 @@
     <link href="<?php echo base_url('assets/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
     <link href="<?php echo base_url('assets/css/demo.min.css'); ?>" rel="stylesheet"/>
 
+<<<<<<< HEAD
       <!-- FONT AWESOME -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+=======
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+>>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     

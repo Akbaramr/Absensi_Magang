@@ -22,11 +22,12 @@ while($lokasi = mysqli_fetch_array($result)){
 }
 if($zona_waktu=='WITA'){
   date_default_timezone_set('Asia/Makassar');
-}elseif(zona_waktu=='WIB'){
+}elseif($zona_waktu=='WIB'){
   date_default_timezone_set('Asia/Jakarta');
-}elseif(zona_waktu=='WIT'){
+}elseif($zona_waktu=='WIT'){ 
   date_default_timezone_set('Asia/Jayapura');
 }
+
 ?>
 
 <style>
@@ -37,9 +38,6 @@ if($zona_waktu=='WITA'){
     text-align: center;
     justify-content: center;
   }
-</style>
-
-<style>
   .parent_clock{
     display: grid;
     grid-template-columns: auto auto auto auto auto;
@@ -73,9 +71,12 @@ if($zona_waktu=='WITA'){
                   <?php if(mysqli_num_rows($cek_presensi_masuk) == 0) { ?>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                     <div class="parent_date">
-                      <div id="tanggal_masuk"></div>
+                      <div id="tanggal_masuk"></div>  
                       <div class="ms-2"></div>
                       <div id="bulan_masuk"></div>
                       <div class="ms-2"></div>
@@ -104,12 +105,19 @@ if($zona_waktu=='WITA'){
 
                       <button type="submit" name="tombol_masuk"class="btn btn-primary mt-3">Masuk</button> 
                     </form>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                     <?php }else{ ?>
                       <i class="fa-regular fa-circle-check fa-4x text-success"></i>
                       <h4 class="my-3">Anda telah melakukan <br>presensi masuk</h4>
 
                       <?php } ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                 </div>
                 
               </div>
@@ -161,6 +169,7 @@ if($zona_waktu=='WITA'){
                       <div id="menit_keluar"></div>
                       <div>:</div>
                       <div id="detik_keluar"></div>
+<<<<<<< HEAD
                     </div>
                     <form method="POST" action="<?= base_url('mahasiswa/presensi/presensi_keluar.php')?>">
                       <input type="hidden" name="id" value="<?= $cek_presensi_keluar['id'] ?>">
@@ -174,6 +183,11 @@ if($zona_waktu=='WITA'){
                       <input type="hidden" value="<?=date('H:i:s')?>" name="jam_keluar">
 
                       <button type="submit" name="tombol-keluar" class="btn btn-danger mt-3">Keluar</button> 
+=======
+                    </div>   
+                    <form action="">
+                      <button type="submit" class="btn btn-danger mt-3">Keluar</button> 
+>>>>>>> 3d1ebe59f6062b64903b5742c6e1cc5ec813cf46
                     </form>
 
                     <?php } else { ?>
@@ -241,4 +255,4 @@ if($zona_waktu=='WITA'){
           }
         </script>
 
-        <?php include('../layout/footer.php'); ?>
+        <?php include('../layout/footer.php'); ?>  
