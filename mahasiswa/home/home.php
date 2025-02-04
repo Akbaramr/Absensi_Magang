@@ -18,6 +18,7 @@ while($lokasi = mysqli_fetch_array($result)){
     $longitude_kantor = $lokasi['longitude'];
     $radius = $lokasi['radius'];
     $zona_waktu = $lokasi['zona_waktu'];
+    $jam_pulang = $lokasi['jam_pulang'];
 }
 if($zona_waktu=='WITA'){
   date_default_timezone_set('Asia/Makassar');
@@ -57,9 +58,22 @@ if($zona_waktu=='WITA'){
             <div class="row">
               <div class="col-md-2"></div>
               <div class="col-md-4">
-                <div class="card text-center">
+                <div class="card text-center h-100">
                   <div class="card-header">Presensi Masuk</div>
                   <div class="card-body"></div>
+
+                  <?php 
+                  $id_mahasiswa = $_SESSION['id'];
+                  $tanggal_hari_ini = date('Y-m-d');
+                  
+                  $cek_presensi_masuk = mysqli_query($connection, "SELECT * FROM presensi 
+                  WHERE id_mahasiswa = '$id_mahasiswa' AND tanggal_masuk = '$tanggal_hari_ini'");
+                  ?>
+
+                  <?php if(mysqli_num_rows($cek_presensi_masuk) == 0) { ?>
+
+
+
                     <div class="parent_date">
                       <div id="tanggal_masuk"></div>
                       <div class="ms-2"></div>
@@ -90,14 +104,47 @@ if($zona_waktu=='WITA'){
 
                       <button type="submit" name="tombol_masuk"class="btn btn-primary mt-3">Masuk</button> 
                     </form>
+
+                    <?php }else{ ?>
+                      <i class="fa-regular fa-circle-check fa-4x text-success"></i>
+                      <h4 class="my-3">Anda telah melakukan <br>presensi masuk</h4>
+
+                      <?php } ?>
                 </div>
                 
               </div>
 
               <div class="col-md-4">
-                <div class="card text-center">
+                <div class="card text-center h-100">
                   <div class="card-header">Presensi Keluar</div>
                   <div class="card-body"></div>
+
+                  <?php 
+                    $ambil_data_presensi = mysqli_query($connection, "SELECT * FROM presensi WHERE 
+                    id_mahasiswa = '$id_mahasiswa' AND tanggal_masuk = '$tanggal_hari_ini'"); 
+                    ?>
+
+                    <?php $waktu_sekarang = date('H:i:s');
+                    
+                    if(strtotime($waktu_sekarang) <= strtotime($jam_pulang)) { ?>
+
+                    <i class="fa-regular fa-circle-xmark fa-4x text-danger"></i>
+                    <h4 class="my-3">Belum waktunya pulang</h4>
+
+                    <?php } elseif(strtotime($waktu_sekarang) >= strtotime($jam_pulang) &&
+                      mysqli_num_rows($ambil_data_presensi) == 0 ) { ?>
+                        <i class="fa-regular fa-circle-xmark fa-4x text-danger"></i>
+                        <h4 class="my-3">Silahkan melakukan presensi masuk <br>terlebih dahulu</h4>
+
+                    <?php }else{ ?>
+
+                      <?php while($cek_presensi_keluar = mysqli_fetch_array
+                        ($ambil_data_presensi)) { ?>
+
+                         <?php if (($cek_presensi_keluar['tanggal_masuk']) &&
+                          $cek_presensi_keluar['tanggal_keluar'] == '0000-00-00') { ?>
+
+
                     <div class="parent_date">
                       <div id="tanggal_keluar"></div>
                       <div class="ms-2"></div>
@@ -115,9 +162,28 @@ if($zona_waktu=='WITA'){
                       <div>:</div>
                       <div id="detik_keluar"></div>
                     </div>
-                    <form action="">
-                      <button type="submit" class="btn btn-danger mt-3">Keluar</button> 
+                    <form method="POST" action="<?= base_url('mahasiswa/presensi/presensi_keluar.php')?>">
+                      <input type="hidden" name="id" value="<?= $cek_presensi_keluar['id'] ?>">
+                      <input type="hidden" name="latitude_mahasiswa" id="latitude_mahasiswa">
+                      <input type="hidden" name="longitude_mahasiswa" id="longitude_mahasiswa">
+                      <input type="hidden" value="<?= $latitude_kantor ?>" name="latitude_kantor">
+                      <input type="hidden" value="<?= $longitude_kantor ?>" name="longitude_kantor">
+                      <input type="hidden" value="<?= $radius ?>" name="radius">
+                      <input type="hidden" value="<?= $zona_waktu ?>" name="zona_waktu">
+                      <input type="hidden" value="<?=date('Y-m-d')?>" name="tanggal_keluar">
+                      <input type="hidden" value="<?=date('H:i:s')?>" name="jam_keluar">
+
+                      <button type="submit" name="tombol-keluar" class="btn btn-danger mt-3">Keluar</button> 
                     </form>
+
+                    <?php } else { ?>
+                      <i class="fa-regular fa-circle-check fa-4x text-success"></i>
+                      <h4 class="my-3">Anda telah melakukan <br>presensi keluar</h4>  
+                      <?php } ?>  
+
+                    <?php } ?>
+
+                    <?php } ?>
                 </div>
               </div>
               <div class="col-md-2"></div>

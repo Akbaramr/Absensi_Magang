@@ -22,17 +22,18 @@ if (!isset($_SESSION["login"])){
 include('../layout/header.php'); 
 include_once("../../config.php");
 
-if(isset($_POST['tombol_masuk'])){
-    $latitude_mahasiswa = isset($_POST['latitude_mahasiswa']) ? floatval($_POST['latitude_mahasiswa']) : 0;
-    $longitude_mahasiswa = isset($_POST['longitude_mahasiswa']) ? floatval($_POST['longitude_mahasiswa']) : 0;
-    $latitude_kantor = isset($_POST['latitude_kantor']) ? floatval($_POST['latitude_kantor']) : 0;
-    $longitude_kantor = isset($_POST['longitude_kantor']) ? floatval($_POST['longitude_kantor']) : 0;
+if(isset($_POST['tombol-keluar'])){
+    $id = $_POST['id'];
+    $latitude_mahasiswa = isset($_POST['latitude_mahasiswa']) ? floatval($_POST['latitude_mahasiswa']) : 0.0;
+    $longitude_mahasiswa = isset($_POST['longitude_mahasiswa']) ? floatval($_POST['longitude_mahasiswa']) : 0.0;
+    $latitude_kantor = isset($_POST['latitude_kantor']) ? floatval($_POST['latitude_kantor']) : 0.0;
+    $longitude_kantor = isset($_POST['longitude_kantor']) ? floatval($_POST['longitude_kantor']) : 0.0;
     $radius = $_POST['radius'];
-    $zona_waktu = isset($_POST['zona_waktu']) ? $_POST['zona_waktu'] : '';
-    $tanggal_masuk = $_POST['tanggal_masuk'];
-    $jam_masuk = $_POST['jam_masuk'];
-
+    $zona_waktu = $_POST['zona_waktu'];
+    $tanggal_keluar = $_POST['tanggal_keluar'];
+    $jam_keluar = $_POST['jam_keluar'];
 }
+
 $theta = deg2rad($longitude_kantor - $longitude_mahasiswa);
 $jarak = sin(deg2rad($latitude_mahasiswa)) * sin(deg2rad($latitude_kantor)) + 
          cos(deg2rad($latitude_mahasiswa)) * cos(deg2rad($latitude_kantor)) * cos($theta);
@@ -55,16 +56,16 @@ $jarak_meter = $jarak_km * 1000;
                 </div>
      </div>
 
-     <div class="col-md-6">
+       <div class="col-md-6">
         <div class="card text-center">
             <div class="card-body" style="margin: auto;">
-            <input type="hidden" id ="id" value="<?= $_SESSION['id'] ?>">
-            <input type="hidden" id ="tanggal_masuk" value="<?=$tanggal_masuk ?>">
-            <input type="hidden" id ="jam_masuk" value="<?=$jam_masuk ?>">
-            <div id="my_camera" style="width:320px; height:240px;"></div>
+            <input type="hidden" id ="id" value="<?= $id ?>">
+            <input type="hidden" id ="tanggal_keluar" value="<?=$tanggal_keluar ?>">
+            <input type="hidden" id ="jam_keluar" value="<?=$jam_keluar ?>">
+            <div id="my_camera"></div>
             <div id="my_result"></div>
-            <div><?= date('d F Y',strtotime($tanggal_masuk)) . ' - '. $jam_masuk ?></div>
-            <button class="btn btn-primary mt-2" id="ambil_foto">Masuk</button>
+            <div><?= date('d F Y',strtotime($tanggal_keluar)) . ' - '. $jam_keluar ?></div>
+            <button class="btn btn-danger mt-2" id="ambil_foto">Keluar</button>
             </div>
         </div>
      </div>
@@ -84,9 +85,11 @@ $jarak_meter = $jarak_km * 1000;
     Webcam.attach( '#my_camera' );
     
    document.getElementById('ambil_foto').addEventListener('click',function(){
-    let id= document.getElementById('id').value;
-    let tanggal_masuk= document.getElementById('tanggal_masuk').value;
-    let jam_masuk= document.getElementById('jam_masuk').value;
+
+    let id = document.getElementById('id').value;
+    let tanggal_keluar= document.getElementById('tanggal_keluar').value;
+    let jam_keluar= document.getElementById('jam_keluar').value;
+
         Webcam.snap( function(data_uri) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -95,16 +98,16 @@ $jarak_meter = $jarak_km * 1000;
         window.location.href = '../home/home.php';
     }
   };
-  xhttp.open("POST", "presensi_masuk_aksi.php", true);
+  xhttp.open("POST", "presensi_keluar_aksi.php", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(
     'photo=' + encodeURIComponent(data_uri) +
-    '&id='+ id + 
-    '&tanggal_masuk='+ tanggal_masuk + 
-    '&jam_masuk='+ jam_masuk 
-  );
-        } );
+    '&id=' + id + 
+    '&tanggal_keluar=' + tanggal_keluar + 
+    '&jam_keluar=' + jam_keluar
+        );
     });
+ });
     // #map leaflet js
     let latitude_ktr = <?= $latitude_kantor ?>;
     let longitude_ktr = <?= $longitude_kantor ?>;

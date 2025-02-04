@@ -151,7 +151,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <?php if($_SESSION['gagal']) { ?>
-    <script>
+    <script>   
         Swal.fire({
         icon: "error",
         title: "Oops...",
