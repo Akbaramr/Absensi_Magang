@@ -18,11 +18,13 @@ if(empty($_GET['tanggal_dari'])){
     $id = $_SESSION['id'];
     $tanggal_dari = $_GET['tanggal_dari'];
     $tanggal_sampai = $_GET['tanggal_sampai'];
-    $result = mysqli_query($connection, "SELECT * FROM presensi WHERE id_mahasiswa = '$id' AND tanggal_masuk BETWEEN '$tanggal_dari' AND '$tanggal_sampai' ORDER BY tanggal_masuk DESC");
+    $result = mysqli_query($connection, "SELECT * FROM presensi WHERE id_mahasiswa = '$id' AND 
+    tanggal_masuk BETWEEN '$tanggal_dari' AND '$tanggal_sampai' ORDER BY tanggal_masuk DESC");
 }
 
 $lokasi_presensi = $_SESSION['lokasi_presensi'];
 $lokasi = mysqli_query($connection, "SELECT * FROM lokasi_presensi WHERE nama_lokasi = '$lokasi_presensi'");
+
 while($lokasi_result = mysqli_fetch_array($lokasi)):
     $jam_masuk_kantor = date('h:i:s', strtotime($lokasi_result['jam_masuk']));
        endwhile;
@@ -112,20 +114,34 @@ while($lokasi_result = mysqli_fetch_array($lokasi)):
         </table>
     </div>
 </div>
+
+<!-- Modal Export Excel -->
 <div class="modal" id="exampleModal" tabindex="-1">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Export Excel Presensi</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit tempora totam unde.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
-      </div>
+      <form method="POST" action="<?= base_url('mahasiswa/presensi/rekap_presensi.php')?>">
+        <div class="modal-body">
+        
+        <div>
+            <label for="">Tanggal Awal</label>
+            <input type="date" class="form-control" name="tanggal_dari"?>
+        </div>
+
+        <div>
+            <label for="">Tanggal Akhir</label>
+            <input type="date" class="form-control" name="tanggal_sampai"?>
+        </div>
+        
+        </div>
+           <div class="modal-footer">
+           <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Export</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

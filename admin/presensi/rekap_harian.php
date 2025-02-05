@@ -95,11 +95,16 @@ if ($lokasi_default && $lokasi_result = mysqli_fetch_array($lokasi_default)) {
             while($rekap = mysqli_fetch_array($result)) : 
 
                 // Perhitungan Total Jam Kerja (menggunakan format 24 jam)
-                $jam_tanggal_masuk = date('Y-m-d H:i:s', strtotime($rekap['tanggal_masuk'] . ' ' . $rekap['jam_masuk']));
-                $jam_tanggal_keluar = date('Y-m-d H:i:s', strtotime($rekap['tanggal_keluar'] . ' ' . $rekap['jam_keluar']));
+                $jam_tanggal_masuk = date('Y-m-d H:i:s', strtotime($rekap['tanggal_masuk'] . ' ' . 
+                $rekap['jam_masuk']));
+                $jam_tanggal_keluar = date('Y-m-d H:i:s', strtotime($rekap['tanggal_keluar'] . ' ' . 
+                $rekap['jam_keluar']));
+
                 $timestamp_masuk = strtotime($jam_tanggal_masuk);
                 $timestamp_keluar = strtotime($jam_tanggal_keluar);
+
                 $selisih = $timestamp_keluar - $timestamp_masuk;
+                
                 $total_jam_kerja = floor($selisih / 3600);
                 $sisa = $selisih - ($total_jam_kerja * 3600);
                 $selisih_menit_kerja = floor($sisa / 60);
@@ -159,17 +164,28 @@ if ($lokasi_default && $lokasi_result = mysqli_fetch_array($lokasi_default)) {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Export Excel</h5>
+        <h5 class="modal-title">Export Excel Rekap Presensi Harian</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <!-- Konten export Excel dapat ditempatkan di sini -->
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit tempora totam unde.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
-      </div>
+      <form method="POST" action="<?= base_url('admin/presensi/rekap_harian_excel.php')?>">
+        <div class="modal-body">
+        
+        <div>
+            <label for="">Tanggal Awal</label>
+            <input type="date" class="form-control" name="tanggal_dari"?>
+        </div>
+
+        <div>
+            <label for="">Tanggal Akhir</label>
+            <input type="date" class="form-control" name="tanggal_sampai"?>
+        </div>
+        
+        </div>
+           <div class="modal-footer">
+           <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Export</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
