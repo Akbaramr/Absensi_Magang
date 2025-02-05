@@ -1,3 +1,4 @@
+edit.php
 <?php
 session_start();
 ob_start();
@@ -26,7 +27,6 @@ if (isset($_POST['edit'])) {
     $role = htmlspecialchars($_POST['role']);
     $status = htmlspecialchars($_POST['status']);
     $lokasi_presensi = isset($_POST['lokasi_presensi']) ? htmlspecialchars($_POST['lokasi_presensi']) : '';
-    $foto = '';
 
     if (empty($_POST['password'])) {
         $password = $_POST['password_lama'];
@@ -34,109 +34,74 @@ if (isset($_POST['edit'])) {
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     }
 
+    // Cek jika ada foto baru yang diunggah
     if ($_FILES['foto_baru']['error'] === 4) {
-        $nama_file = $_POST['foto_lama'];
+        $foto = $_POST['foto_lama'];
     } else {
-        // Pastikan variabel selalu ada sebelum digunakan
-        $ekstensi_diizinkan = ["jpg", "jpeg", "png"]; // Ekstensi yang diperbolehkan
-        $ambil_ekstensi = ''; // Pastikan ini selalu ada
-        $ukuran_file = 0; // Default untuk menghindari error
+        $ekstensi_diizinkan = ["jpg", "jpeg", "png"];
+        $ambil_ekstensi = pathinfo($_FILES['foto_baru']['name'], PATHINFO_EXTENSION);
+        $ukuran_file = $_FILES['foto_baru']['size'];
         $max_ukuran_file = 5 * 1024 * 1024; // 5MB
+        $file_tmp = $_FILES['foto_baru']['tmp_name'];
+        $file_direktori = "../../assets/img/foto_mahasiswa/" . $_FILES['foto_baru']['name'];
 
-        // File Upload Validation
-        if (isset($_FILES['foto_baru']) && $_FILES['foto_baru']['error'] == 0) {
-            $file = $_FILES['foto_baru'];
-            $nama_file = $file['name'];
-            $file_tmp = $file['tmp_name'];
-            $ukuran_file = $file['size'];
-            $file_direktori = "../../assets/img/foto_mahasiswa/" . $nama_file;
-
-            // Ambil ekstensi file
-            $ambil_ekstensi = pathinfo($nama_file, PATHINFO_EXTENSION);
-
-            if (in_array(strtolower($ambil_ekstensi), $ekstensi_diizinkan)) {
-                if ($ukuran_file <= $max_ukuran_file) {
-                    move_uploaded_file($file_tmp, $file_direktori);
-                    $foto = $nama_file;
-                } else {
-                    $pesan_kesalahan[] = "Ukuran file tidak boleh melebihi 5 MB";
-                }
-            } else {
-                $pesan_kesalahan[] = "Hanya File JPG, JPEG, dan PNG yang Diperbolehkan";
-            }
+        if (in_array(strtolower($ambil_ekstensi), $ekstensi_diizinkan) && $ukuran_file <= $max_ukuran_file) {
+            move_uploaded_file($file_tmp, $file_direktori);
+            $foto = $_FILES['foto_baru']['name'];
+        } else {
+            $foto = $_POST['foto_lama']; // Jika gagal, gunakan foto lama
         }
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($nama)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Nama Wajib Diisi";
-        }
-        if (empty($jenis_kelamin)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Jenis Kelamin Wajib Diisi";
-        }
-        if (empty($alamat)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Alamat Wajib Diisi";
-        }
-        if (empty($no_handphone)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Nomor Handphone Wajib Diisi";
-        }
-        if (empty($divisi)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Divisi Wajib Diisi";
-        }
-        if (empty($username)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Username Wajib Diisi";
-        }
-        if (empty($role)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Role Wajib Diisi";
-        }
-        if (empty($status)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Status Wajib Diisi";
-        }
-        if (empty($lokasi_presensi)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Lokasi Presensi Wajib Diisi";
-        }
-        if (empty($password)) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Password Wajib Diisi";
-        }
-        if ($_POST['password'] != $_POST['ulangi_password']) {
-            $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i>Password Tidak Sama";
-        }
+        $pesan_kesalahan = [];
 
-        if ($_FILES['foto_baru']['error'] !== 4) {
+        if (empty($nama)) $pesan_kesalahan[] = "Nama Wajib Diisi";
+        if (empty($jenis_kelamin)) $pesan_kesalahan[] = "Jenis Kelamin Wajib Diisi";
+        if (empty($alamat)) $pesan_kesalahan[] = "Alamat Wajib Diisi";
+        if (empty($no_handphone)) $pesan_kesalahan[] = "Nomor Handphone Wajib Diisi";
+        if (empty($divisi)) $pesan_kesalahan[] = "Divisi Wajib Diisi";
+        if (empty($username)) $pesan_kesalahan[] = "Username Wajib Diisi";
+        if (empty($role)) $pesan_kesalahan[] = "Role Wajib Diisi";
+        if (empty($status)) $pesan_kesalahan[] = "Status Wajib Diisi";
+        if (empty($lokasi_presensi)) $pesan_kesalahan[] = "Lokasi Presensi Wajib Diisi";
+        if ($_POST['password'] != $_POST['ulangi_password']) $pesan_kesalahan[] = "Password Tidak Sama";
 
-            if (!in_array(strtolower($ambil_ekstensi), $ekstensi_diizinkan)) {
-                $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i> Hanya File JPG, JPEG, dan PNG yang Diperbolehkan";
-            }
-            if ($ukuran_file > $max_ukuran_file) {
-                $pesan_kesalahan[] = "<i class='fa-solid fa-check'></i> Ukuran file tidak boleh melebihi 5 MB";
-            }
-        }
         if (!empty($pesan_kesalahan)) {
             $_SESSION['validasi'] = implode("<br>", $pesan_kesalahan);
         } else {
-        
-                $mahasiswa = mysqli_query($connection, "UPDATE mahasiswa SET
-                    nama ='$nama',
-                    jenis_kelamin ='$jenis_kelamin',
-                    alamat = '$alamat',
-                    no_handphone = '$no_handphone',
-                    divisi = '$divisi',
-                    lokasi_presensi = '$lokasi_presensi',
-                    foto = '$nama_file'      
-                WHERE id = '$id' ");
+            // Query Update Mahasiswa
+            $mahasiswa = mysqli_query($connection, "UPDATE mahasiswa SET
+                nama = '$nama',
+                jenis_kelamin = '$jenis_kelamin',
+                alamat = '$alamat',
+                no_handphone = '$no_handphone',
+                divisi = '$divisi',
+                universitas = '$universitas',
+                lokasi_presensi = '$lokasi_presensi',
+                foto = '$foto'      
+            WHERE id = '$id' ");
 
-                $user = mysqli_query($connection, "UPDATE users SET 
-                    username ='$username',
-                    password ='$password',
-                    status = '$status',
-                    role ='$role'
-                WHERE id = '$id'");
+            if (!$mahasiswa) {
+                die("Error updating mahasiswa: " . mysqli_error($connection));
+            }
 
-                $_SESSION['berhasil'] = 'Data Berhasil diupdate';
-                header("Location: mahasiswa.php");
-                exit;
-               
-            } 
+            // Query Update User
+            $user = mysqli_query($connection, "UPDATE users SET 
+                username = '$username',
+                password = '$password',
+                status = '$status',
+                role = '$role'
+            WHERE id_mahasiswa = '$id'");
+
+            if (!$user) {
+                die("Error updating users: " . mysqli_error($connection));
+            }
+
+            $_SESSION['berhasil'] = 'Data Berhasil diupdate';
+            header("Location: mahasiswa.php");
+            exit;
+        }
     }
 }
 
@@ -171,7 +136,7 @@ while ($mahasiswa = mysqli_fetch_array($result)) {
                     const errors = <?= json_encode($_SESSION['validasi']); ?>;
                     Swal.fire({
                         title: 'Validasi Gagal',
-                        html: errors.map(error => `<li>${error}</li>`).join(''),
+                        html: errors.map(error => <li>${error}</li>).join(''),
                         icon: 'error',
                     });
                 </script>

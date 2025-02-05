@@ -170,5 +170,54 @@
 <?php unset($_SESSION['berhasil']); ?>
 
 <?php endif; ?>
+<?php if(isset($_SESSION['validasi'])) : ?>
+
+<script>
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
+  Toast.fire({
+    icon: "error",
+    title: "<?= $_SESSION['validasi'] ?>",
+  });
+</script>
+
+
+<?php unset($_SESSION['validasi']); ?>
+
+<?php endif; ?>
+<script>
+$(document).ready(function () {
+    // Fungsi untuk tombol hapus
+    $('.tombol-hapus').on('click', function (e) {
+        e.preventDefault(); // Mencegah aksi default tombol
+        var getLink = $(this).attr('href'); // Mengambil link dari tombol
+        Swal.fire({
+            title: "Yakin Hapus?",
+            text: "Data yang sudah dihapus tidak bisa dikembalikan!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect ke URL hapus
+                window.location.href = getLink;
+            }
+        });
+    });
+});
+</script>
   </body>
 </html>

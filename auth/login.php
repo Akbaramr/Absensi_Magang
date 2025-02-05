@@ -4,47 +4,47 @@ session_start();
  require_once ('../config.php');
 
  if (isset($_POST["login"])){
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+  $username = $_POST["username"];
+  $password = $_POST["password"];
 
-    $result = mysqli_query($connection, "SELECT * FROM users JOIN mahasiswa ON users.
-    id_mahasiswa = mahasiswa.id WHERE username = '$username'");
+  // Query login dengan case-sensitive
+  $result = mysqli_query($connection, "SELECT * FROM users JOIN mahasiswa ON users.id_mahasiswa = mahasiswa.id WHERE BINARY username = '$username'");
 
-    if (mysqli_num_rows($result) === 1){
-      $row = mysqli_fetch_assoc($result);
+  if (mysqli_num_rows($result) === 1){
+    $row = mysqli_fetch_assoc($result);
 
-      if (password_verify($password,$row["password"])){
-        if ($row['status'] == 'Aktif'){
+    if (password_verify($password,$row["password"])){
+      if ($row['status'] == 'Aktif'){
 
-          $_SESSION["login"] = true;
-          $_SESSION['id'] = $row['id'];
-          $_SESSION['role'] = $row['role'];
-          $_SESSION['nama'] = $row['nama'];
-          $_SESSION['nim'] = $row['nim'];
-          $_SESSION['divisi'] = $row['divisi'];
-          $_SESSION['universitas'] = $row['universitas'];
-          $_SESSION['lokasi_presensi'] = $row['lokasi_presensi'];
+        $_SESSION["login"] = true;
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['role'] = $row['role'];
+        $_SESSION['nama'] = $row['nama'];
+        $_SESSION['nim'] = $row['nim'];
+        $_SESSION['divisi'] = $row['divisi'];
+        $_SESSION['universitas'] = $row['universitas'];
+        $_SESSION['lokasi_presensi'] = $row['lokasi_presensi'];
 
-          if($row['role'] === 'admin'){
-            header("Location: ../admin/home/home.php");
-            exit();
-          }else{
-            header("Location: ../mahasiswa/home/home.php");
-            exit(); 
-          }
-
+        if($row['role'] === 'admin'){
+          header("Location: ../admin/home/home.php");
+          exit();
         }else{
-          $_SESSION["gagal"] = "Akun Anda belum aktif";
+          header("Location: ../mahasiswa/home/home.php");
+          exit(); 
         }
 
-      } else{
-        $_SESSION["gagal"] = "Password salah, silahkan coba lagi";
+      }else{
+        $_SESSION["gagal"] = "Akun Anda belum aktif";
       }
 
-    } else{  
-        $_SESSION["gagal"] = "Username salah, silahkan coba lagi";
+    } else{
+      $_SESSION["gagal"] = "Password salah, silahkan coba lagi";
     }
- }
+
+  } else{  
+      $_SESSION["gagal"] = "Username salah, silahkan coba lagi";
+  }
+}
  
  ?>
 <!doctype html>
@@ -164,4 +164,4 @@ session_start();
     <?php } ?>
 
   </body>
-</html
+</html>
