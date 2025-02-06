@@ -6,13 +6,11 @@ if (!isset($_SESSION["login"])){
   header("Location: ../../auth/login.php?pesan=tolak_akses");
 } 
 
-
 $judul = "Home";
 include('../layout/header.php'); 
 $mahasiswa = mysqli_query($connection, "SELECT mahasiswa.*, users.status FROM mahasiswa JOIN users ON 
 mahasiswa.id = users.id_mahasiswa WHERE status = 'Aktif'");
 $total_mahasiswa_aktif = mysqli_num_rows($mahasiswa);
-
 
 ?>
         <!-- Page body -->

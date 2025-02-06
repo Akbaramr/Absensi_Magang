@@ -9,5 +9,5 @@ $result = mysqli_query($connection, "DELETE FROM mahasiswa WHERE
 id=$id");
 
 $_SESSION['berhasil'] = 'Data berhasil dihapus';
-header("Location: jabatan.php");
+header("Location: mahasiswa.php");
 exit;

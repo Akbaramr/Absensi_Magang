@@ -202,7 +202,7 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
                                 </select>
                             </div>
 
-                            <div class="mb-3">
+                <div class="mb-3">
                                 <label for="">Alamat</label>
                                 <input type="text" class="form-control" name="alamat" value="<?php if (isset
                                 ($_POST['alamat'])) echo htmlspecialchars($_POST['alamat']) ?>">
