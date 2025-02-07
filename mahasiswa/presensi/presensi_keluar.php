@@ -10,17 +10,20 @@
             height: 300px;
         }
      </style>
-<?php 
+<?php
 ob_start();
-session_start();  
-if (!isset($_SESSION["login"])){
-  header("Location: ../../auth/login.php?pesan=belum_login");
-}else if ($_SESSION["role"] != 'mahasiswa'){
-  header("Location: ../../auth/login.php?pesan=tolak_akses");
-} 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: ../../auth/login.php?pesan=belum_login");
+    exit(); // Penting untuk menghentikan eksekusi script setelah redirect
+} else if ($_SESSION["role"] != 'mahasiswa') {
+    header("Location: ../../auth/login.php?pesan=tolak_akses");
+    exit(); // Penting untuk menghentikan eksekusi script setelah redirect
+}
 
 $judul = 'Presensi Keluar';
-include('../layout/header.php'); 
+include('../layout/header.php');
 include_once("../../config.php");
 
 if(isset($_POST['tombol-keluar'])){
@@ -33,18 +36,28 @@ if(isset($_POST['tombol-keluar'])){
     $zona_waktu = $_POST['zona_waktu'];
     $tanggal_keluar = $_POST['tanggal_keluar'];
     $jam_keluar = $_POST['jam_keluar'];
+
+    // Konversi derajat ke radian
+    $lat_mhs_rad = deg2rad($latitude_mahasiswa);
+    $lon_mhs_rad = deg2rad($longitude_mahasiswa);
+    $lat_ktr_rad = deg2rad($latitude_kantor);
+    $lon_ktr_rad = deg2rad($longitude_kantor);
+
+    // Haversine formula
+    $dlon = $lon_ktr_rad - $lon_mhs_rad;
+    $dlat = $lat_ktr_rad - $lat_mhs_rad;
+    $a = pow(sin($dlat / 2), 2) + cos($lat_mhs_rad) * cos($lat_ktr_rad) * pow(sin($dlon / 2), 2);
+    $c = 2 * asin(sqrt($a));
+    $radius_bumi = 6371; // Radius bumi dalam kilometer
+    $jarak_km = $radius_bumi * $c;
+    $jarak_meter = $jarak_km * 1000;
 }
 
-$theta = deg2rad($longitude_kantor - $longitude_mahasiswa);
-$jarak = sin(deg2rad($latitude_mahasiswa)) * sin(deg2rad($latitude_kantor)) + 
-         cos(deg2rad($latitude_mahasiswa)) * cos(deg2rad($latitude_kantor)) * cos($theta);
-$jarak = acos($jarak);
-$jarak = rad2deg($jarak);
-$mil = $jarak * 60 * 1.1515;
-$jarak_km = $mil * 1.609344;
-$jarak_meter = $jarak_km * 1000;
-
 ?>
+    <link href="
+https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5.0.1/dark.min.css
+" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <?php  { ?>
     <div class="page-body">
           <div class="container-xl">
@@ -88,27 +101,54 @@ $jarak_meter = $jarak_km * 1000;
    document.getElementById('ambil_foto').addEventListener('click',function(){
 
     let id = document.getElementById('id').value;
-    let tanggal_keluar= document.getElementById('tanggal_keluar').value;
-    let jam_keluar= document.getElementById('jam_keluar').value;
+    let tanggal_keluar = document.getElementById('tanggal_keluar').value;
+    let jam_keluar = document.getElementById('jam_keluar').value;
+    let jarak_meter = <?= $jarak_meter ?>; // Mengambil jarak dari PHP
+    let radius = <?= $radius ?>; // Mengambil radius dari PHP
+
+        if (jarak_meter > radius) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Anda tidak berada di lokasi!',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK',
+                customClass: {
+                    container: 'my-swal'
+                }
+            });
+            return; // Menghentikan proses jika di luar radius
+        }
 
         Webcam.snap( function(data_uri) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
-                document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-        window.location.href = '../home/home.php';
-    }
-  };
-  xhttp.open("POST", "presensi_keluar_aksi.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send(
-    'photo=' + encodeURIComponent(data_uri) +
-    '&id=' + id + 
-    '&tanggal_keluar=' + tanggal_keluar + 
-    '&jam_keluar=' + jam_keluar
-        );
+                if (this.readyState == 4 && this.status == 200) {
+                    // Berhasil presensi, redirect
+                    window.location.href = '../home/home.php';
+                } else if (this.readyState == 4 && this.status != 200) {
+                    // Handle error jika perlu
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan saat memproses presensi.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            };
+            xhttp.open("POST", "presensi_keluar_aksi.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(
+                'photo=' + encodeURIComponent(data_uri) +
+                '&id=' + id +
+                '&tanggal_keluar=' + tanggal_keluar +
+                '&jam_keluar=' + jam_keluar
+            );
+        });
     });
- });
+
     // #map leaflet js
     let latitude_ktr = <?= $latitude_kantor ?>;
     let longitude_ktr = <?= $longitude_kantor ?>;
@@ -127,6 +167,7 @@ var circle = L.circle([latitude_mhs, longitude_mhs], {
     radius: 500
 }).addTo(map).bindPopup("Lokasi Anda Saat Ini").openPopup();
 </script>
-<a href="javascript:void(take_snapshot())">Take Snapshot</a>
 <?php
 }
+?>
+<?php  include('../layout/footer.php')?>

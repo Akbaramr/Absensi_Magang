@@ -154,4 +154,3 @@ while($data = mysqli_fetch_array($result)){
         </div>
     </div>
 </div>
-<?php include('../layout/footer.php'); ?>

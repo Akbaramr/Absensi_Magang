@@ -134,4 +134,3 @@ $result = mysqli_query($connection, "SELECT * FROM ketidakhadiran WHERE id_mahas
         </div>
     </div>
 </div>
-<?php include('../layout/footer.php'); ?>

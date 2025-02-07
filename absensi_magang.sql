@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2025 at 02:57 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 06 Feb 2025 pada 04.05
+-- Versi server: 10.4.28-MariaDB-log
+-- Versi PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jabatan`
+-- Struktur dari tabel `jabatan`
 --
 
 CREATE TABLE `jabatan` (
@@ -33,7 +33,7 @@ CREATE TABLE `jabatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `jabatan`
+-- Dumping data untuk tabel `jabatan`
 --
 
 INSERT INTO `jabatan` (`id`, `jabatan`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `jabatan` (`id`, `jabatan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ketidakhadiran`
+-- Struktur dari tabel `ketidakhadiran`
 --
 
 CREATE TABLE `ketidakhadiran` (
@@ -58,7 +58,7 @@ CREATE TABLE `ketidakhadiran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ketidakhadiran`
+-- Dumping data untuk tabel `ketidakhadiran`
 --
 
 INSERT INTO `ketidakhadiran` (`id`, `id_mahasiswa`, `keterangan`, `tanggal`, `deskripsi`, `file`, `status_pengajuan`) VALUES
@@ -67,7 +67,7 @@ INSERT INTO `ketidakhadiran` (`id`, `id_mahasiswa`, `keterangan`, `tanggal`, `de
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lokasi_presensi`
+-- Struktur dari tabel `lokasi_presensi`
 --
 
 CREATE TABLE `lokasi_presensi` (
@@ -84,7 +84,7 @@ CREATE TABLE `lokasi_presensi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `lokasi_presensi`
+-- Dumping data untuk tabel `lokasi_presensi`
 --
 
 INSERT INTO `lokasi_presensi` (`id`, `nama_lokasi`, `alamat_lokasi`, `tipe_lokasi`, `latitude`, `longitude`, `radius`, `zona_waktu`, `jam_masuk`, `jam_pulang`) VALUES
@@ -93,7 +93,7 @@ INSERT INTO `lokasi_presensi` (`id`, `nama_lokasi`, `alamat_lokasi`, `tipe_lokas
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mahasiswa`
+-- Struktur dari tabel `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
@@ -110,18 +110,18 @@ CREATE TABLE `mahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `mahasiswa`
+-- Dumping data untuk tabel `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`id`, `nim`, `nama`, `jenis_kelamin`, `alamat`, `no_handphone`, `divisi`, `universitas`, `lokasi_presensi`, `foto`) VALUES
-(1, 'MHS-0001', 'Tizar', 'Laki-laki', 'BTP', '08123456789', 'Admin', 'UMI', 'PN Makassar', 'akbar.png'),
+(1, 'MHS-0001', 'Tizar  ', 'Laki-Laki', 'BTP', '08123456789', 'Admin', 'UMI', 'PN Makassar', 'd36c614e-5e61-45ba-a401-fe08be499513.jpeg'),
 (2, 'MHS-0002', 'Rehan', 'Perempuan', 'Urip', '08912', 'Mahasiswa Magang', 'UMI', 'PN Makassar', 'akbar.png'),
 (4, 'MHS-0003', 'Ilham Nur', 'Laki-Laki', 'Jl.baiturrahman', '081342325952', 'IT SUPPORTt', 'umi', 'PN Makassar', '67664d2f0192a.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `presensi`
+-- Struktur dari tabel `presensi`
 --
 
 CREATE TABLE `presensi` (
@@ -136,16 +136,16 @@ CREATE TABLE `presensi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `presensi`
+-- Dumping data untuk tabel `presensi`
 --
 
 INSERT INTO `presensi` (`id`, `id_mahasiswa`, `tanggal_masuk`, `jam_masuk`, `foto_masuk`, `tanggal_keluar`, `jam_keluar`, `foto_keluar`) VALUES
-(70, 2, '2025-02-05', '13:26:05', 'masuk2025-02-05.png', '2025-02-05', '13:26:10', 'keluar2025-02-05.png');
+(72, 2, '2025-02-06', '11:04:59', 'masuk2025-02-06.png', '0000-00-00', '00:00:00', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -158,12 +158,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `id_mahasiswa`, `username`, `password`, `status`, `role`) VALUES
 (1, 1, 'Tizar', '$2y$10$rjMufkGRZvQLvICHBktYJOFMl9xPYlu5tJyuob8hVfdrUxj09sPT.', 'Aktif', 'admin'),
-(2, 2, 'Rehan', '$2y$10$rjMufkGRZvQLvICHBktYJOFMl9xPYlu5tJyuob8hVfdrUxj09sPT.', 'Aktif', 'mahasiswa'),
+(2, 2, 'Rehan', '$2y$10$X8kraXGiM2E50Y2VLMwu7eR.J4PQ9CpjpyOY9ZOHtu0Orx1bbGU6u', 'Aktif', 'mahasiswa'),
 (5, 4, 'Ilham', '$2y$10$R92BYvZJurJRfzffah3tCOFpElUJ3wFSDzWCBnR74gaGXqzmQVDwC', 'Aktif', 'mahasiswa');
 
 --
@@ -171,39 +171,39 @@ INSERT INTO `users` (`id`, `id_mahasiswa`, `username`, `password`, `status`, `ro
 --
 
 --
--- Indexes for table `jabatan`
+-- Indeks untuk tabel `jabatan`
 --
 ALTER TABLE `jabatan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ketidakhadiran`
+-- Indeks untuk tabel `ketidakhadiran`
 --
 ALTER TABLE `ketidakhadiran`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_mahasiswa` (`id_mahasiswa`);
 
 --
--- Indexes for table `lokasi_presensi`
+-- Indeks untuk tabel `lokasi_presensi`
 --
 ALTER TABLE `lokasi_presensi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mahasiswa`
+-- Indeks untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `presensi`
+-- Indeks untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_mahasiswa` (`id_mahasiswa`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -211,63 +211,63 @@ ALTER TABLE `users`
   ADD KEY `id_pegawai_2` (`id_mahasiswa`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `jabatan`
+-- AUTO_INCREMENT untuk tabel `jabatan`
 --
 ALTER TABLE `jabatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `ketidakhadiran`
+-- AUTO_INCREMENT untuk tabel `ketidakhadiran`
 --
 ALTER TABLE `ketidakhadiran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `lokasi_presensi`
+-- AUTO_INCREMENT untuk tabel `lokasi_presensi`
 --
 ALTER TABLE `lokasi_presensi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `mahasiswa`
+-- AUTO_INCREMENT untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `presensi`
+-- AUTO_INCREMENT untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `ketidakhadiran`
+-- Ketidakleluasaan untuk tabel `ketidakhadiran`
 --
 ALTER TABLE `ketidakhadiran`
   ADD CONSTRAINT `ketidakhadiran_ibfk_1` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `presensi`
+-- Ketidakleluasaan untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
   ADD CONSTRAINT `presensi_ibfk_1` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `users`
+-- Ketidakleluasaan untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

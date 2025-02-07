@@ -150,7 +150,7 @@ session_start();
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <?php if($_SESSION['gagal']) { ?>
+    <?php if(isset($_SESSION['gagal']) && !empty($_SESSION['gagal'])) { ?>
     <script>   
         Swal.fire({
         icon: "error",
@@ -160,8 +160,8 @@ session_start();
     </script>
 
     <?php unset($_SESSION['gagal']); ?>
-  
-    <?php } ?>
+<?php } ?>
+
 
   </body>
 </html>
