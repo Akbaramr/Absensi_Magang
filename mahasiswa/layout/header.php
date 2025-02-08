@@ -26,6 +26,35 @@ require_once ('../../config.php') ?>
       body {
         font-feature-settings: "cv03", "cv04", "cv11";
       }
+
+      .navbar-toggler .close-icon {
+  display: none; /* Sembunyikan ikon close secara default */
+}
+
+.navbar-toggler.active .navbar-toggler-icon {
+  display: none; /* Sembunyikan ikon hamburger */
+}
+
+.navbar-toggler.active .close-icon {
+  display: inline; /* Tampilkan ikon close */
+  font-size: 30px;
+  line-height: 0;
+}
+
+.nav-icon {
+  margin-right: 8px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+/* Memastikan profil tetap tampil */
+.nav-item.dropdown {
+  display: flex;
+  align-items: center;
+}
+
+
+
     </style>
   </head>
   <body >
@@ -34,24 +63,26 @@ require_once ('../../config.php') ?>
 
       
  <!-- Bootstrap 5 Navbar -->
-<header class="navbar navbar-expand-md navbar-light bg-light d-print-none">
+ <header class="navbar navbar-expand-md navbar-light bg-light d-print-none">
   <div class="container-xl">
     <!-- Tombol Toggle (Mobile) -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
+      aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
+      <span class="close-icon" style="font-size: 30px; display: none;">&times;</span>
     </button>
 
     <!-- Logo di Desktop -->
     <a class="navbar-brand d-none d-md-block" href=".">
-      <img src="<?= base_url('assets/img/PRIMA.png') ?>" width="110" height="32" alt="Logo">
+      <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="110" height="32" alt="Logo">
     </a>
 
     <!-- Logo di Mobile -->
     <a class="navbar-brand mx-auto d-md-none" href=".">
-      <img src="<?= base_url('assets/img/PRIMA.png') ?>" width="90" height="28" alt="Logo">
+      <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="90" height="28" alt="Logo">
     </a>
 
-    <!-- Profil User (Tetap di Navbar) -->
+    <!-- Profil User (Tetap Muncul di Header) -->
     <div class="nav-item dropdown order-md-last">
       <a href="#" class="nav-link d-flex align-items-center" data-bs-toggle="dropdown">
         <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
@@ -67,31 +98,27 @@ require_once ('../../config.php') ?>
       </div>
     </div>
 
-    <!-- Navbar Items (Di dalam Hamburger Menu untuk Mobile) -->
+    <!-- Navbar Items -->
     <div class="collapse navbar-collapse" id="navbar-menu">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('mahasiswa/home/home.php') ?>">
-            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-house-door"></i></span>
-            Home
+            <i class="bi bi-house-door nav-icon"></i> Home
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('mahasiswa/presensi/rekap_presensi.php') ?>">
-            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-clipboard-data"></i></span>
-            Rekap Presensi
+            <i class="bi bi-clipboard-data nav-icon"></i> Rekap Presensi
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('mahasiswa/ketidakhadiran/ketidakhadiran.php') ?>">
-            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-x-circle"></i></span>
-            Ketidakhadiran
+            <i class="bi bi-x-circle nav-icon"></i> Ketidakhadiran
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-danger" href="<?= base_url('auth/logout.php') ?>">
-            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-box-arrow-right"></i></span>
-            Logout
+            <i class="bi bi-box-arrow-right nav-icon"></i> Logout
           </a>
         </li>
       </ul>
@@ -99,13 +126,44 @@ require_once ('../../config.php') ?>
   </div>
 </header>
 
-<!-- Tambahkan Bootstrap JavaScript (harus sebelum </body>) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Bootstrap Icons -->
+
+
+<!-- Tambahkan Bootstrap JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var navbarToggler = document.querySelector(".navbar-toggler");
+    var navbarIcon = navbarToggler.querySelector(".navbar-toggler-icon");
+    var closeIcon = navbarToggler.querySelector(".close-icon");
+
+    navbarToggler.addEventListener("click", function () {
+      setTimeout(() => { // Tunggu transisi selesai
+        var isExpanded = navbarToggler.getAttribute("aria-expanded") === "true";
+
+        if (isExpanded) {
+          navbarToggler.classList.add("active");
+          closeIcon.style.display = "inline"; // Tampilkan ikon close
+          navbarIcon.style.display = "none"; // Sembunyikan ikon hamburger
+        } else {
+          navbarToggler.classList.remove("active");
+          closeIcon.style.display = "none"; // Sembunyikan ikon close
+          navbarIcon.style.display = "inline"; // Tampilkan ikon hamburger
+        }
+      }, 200);
+    });
+  });
+</script>
+
+
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+
+
+
+
 
 
       

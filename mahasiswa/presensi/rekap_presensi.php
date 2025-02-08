@@ -27,7 +27,7 @@ $lokasi = mysqli_query($connection, "SELECT * FROM lokasi_presensi WHERE nama_lo
 
 while($lokasi_result = mysqli_fetch_array($lokasi)):
     $jam_masuk_kantor = date('h:i:s', strtotime($lokasi_result['jam_masuk']));
-       endwhile;
+endwhile;
 ?>
 
 <div class="page-body">
@@ -35,7 +35,7 @@ while($lokasi_result = mysqli_fetch_array($lokasi)):
     <div class="row align-items-center">
       <!-- Tombol Export Excel -->
       <div class="col-md-2 mb-2">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary" id="exportButton">
           Export Excel
         </button>
       </div>
@@ -120,34 +120,22 @@ while($lokasi_result = mysqli_fetch_array($lokasi)):
   </div>
 </div>
 
-<!-- Modal Export Excel -->
-<div class="modal fade" id="exampleModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Export Excel Presensi</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form method="POST" action="<?= base_url('mahasiswa/presensi/rekap_presensi.php')?>">
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="tanggal_dari" class="form-label">Tanggal Awal</label>
-            <input type="date" class="form-control" name="tanggal_dari">
-          </div>
+<!-- Tambahkan SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-          <div class="mb-3">
-            <label for="tanggal_sampai" class="form-label">Tanggal Akhir</label>
-            <input type="date" class="form-control" name="tanggal_sampai">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Export</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<!-- JavaScript SweetAlert -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("exportButton").addEventListener("click", function (event) {
+      event.preventDefault(); // Mencegah aksi default
+      Swal.fire({
+        icon: "error",
+        title: "Gagal!",
+        text: "Anda tidak bisa mengekspor!",
+        confirmButtonText: "OK"
+      });
+    });
+  });
+</script>
 
-
-<?php  include('../layout/footer.php')?>
+<?php include('../layout/footer.php')?>
