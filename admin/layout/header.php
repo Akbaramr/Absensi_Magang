@@ -71,9 +71,17 @@ require_once('../../config.php')
           <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-          <a href=".">
-            <img src="./static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-          </a>
+        
+        <!-- Logo di Desktop -->
+        <a class="navbar-brand d-none d-md-block" href=".">
+          <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="110" height="32" alt="Logo">
+        </a>
+
+        <!-- Logo di Mobile -->
+        <a class="navbar-brand mx-auto d-md-none" href=".">
+          <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="90" height="28" alt="Logo">
+        </a>
+        
         </h1>
         <div class="navbar-nav flex-row order-md-last">
           <div class="d-none d-md-flex">

@@ -8,9 +8,40 @@ if (!isset($_SESSION["login"])){
 
 $judul = "Home";
 include('../layout/header.php'); 
-$mahasiswa = mysqli_query($connection, "SELECT mahasiswa.*, users.status FROM mahasiswa JOIN users ON 
-mahasiswa.id = users.id_mahasiswa WHERE status = 'Aktif'");
+$mahasiswa = mysqli_query($connection, "
+    SELECT mahasiswa.*, users.status 
+    FROM mahasiswa 
+    JOIN users ON mahasiswa.id = users.id_mahasiswa 
+    WHERE users.status = 'Aktif' 
+    AND users.role = 'mahasiswa'
+");
 $total_mahasiswa_aktif = mysqli_num_rows($mahasiswa);
+
+$hadir = mysqli_query($connection, "
+    SELECT COUNT(*) as total_hadir 
+    FROM presensi 
+    WHERE jam_masuk <= '08:00:00' OR jam_masuk >= '08:00:00'
+    AND jam_keluar >= '16:00:00' 
+    AND tanggal_masuk = CURDATE()
+");
+$data_hadir = mysqli_fetch_assoc($hadir);
+$jumlah_hadir = $data_hadir['total_hadir'];
+
+// Query untuk menghitung jumlah mahasiswa yang alpa (tidak ada data masuk pada hari ini)
+$alpa = mysqli_query($connection, "SELECT COUNT(*) as total FROM users 
+    WHERE role = 'mahasiswa' AND status = 'Aktif' 
+    AND id_mahasiswa NOT IN (SELECT DISTINCT id_mahasiswa FROM presensi WHERE tanggal_masuk = CURDATE())");
+$data_alpa = mysqli_fetch_assoc($alpa);
+$jumlah_alpa = $data_alpa['total'];
+
+$sakit_izin_cuti = mysqli_query($connection, "
+    SELECT COUNT(*) as total 
+    FROM ketidakhadiran 
+    WHERE keterangan IN ('sakit', 'izin', 'cuti') 
+    AND tanggal = CURDATE()
+");
+$data_sakit_izin_cuti = mysqli_fetch_assoc($sakit_izin_cuti);
+$jumlah_sakit_izin_cuti = $data_sakit_izin_cuti['total'];
 
 ?>
         <!-- Page body -->
@@ -66,7 +97,7 @@ $total_mahasiswa_aktif = mysqli_num_rows($mahasiswa);
                               Jumlah Hadir
                             </div>
                             <div class="text-secondary">
-                              0 Mahasiswa (Belum code) 
+                              <?= $jumlah_hadir . ' Mahasiswa' ?>
                             </div>
                           </div>
                         </div>
@@ -92,7 +123,7 @@ $total_mahasiswa_aktif = mysqli_num_rows($mahasiswa);
                               Jumlah Alpa
                             </div>
                             <div class="text-secondary">
-                              0 Mahasiswa (Belum code) 
+                              <?= $jumlah_alpa . ' Mahasiswa' ?>
                             </div>
                           </div>
                         </div>
@@ -119,7 +150,7 @@ $total_mahasiswa_aktif = mysqli_num_rows($mahasiswa);
                               Jumlah Sakit, Izin & Cuti
                             </div>
                             <div class="text-secondary">
-                              0 Mahasiswa (Belum code) 
+                              <?= $jumlah_sakit_izin_cuti . ' Mahasiswa' ?>
                             </div>
                           </div>
                         </div>
