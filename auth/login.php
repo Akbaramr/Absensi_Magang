@@ -24,6 +24,8 @@ session_start();
         $_SESSION['divisi'] = $row['divisi'];
         $_SESSION['universitas'] = $row['universitas'];
         $_SESSION['lokasi_presensi'] = $row['lokasi_presensi'];
+        $_SESSION['foto'] = $row['foto']; // Pastikan 'foto' adalah nama kolom di tabel mahasiswa
+
 
         if($row['role'] === 'admin'){
           header("Location: ../admin/home/home.php");

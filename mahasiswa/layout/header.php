@@ -84,19 +84,22 @@ require_once ('../../config.php') ?>
 
     <!-- Profil User (Tetap Muncul di Header) -->
     <div class="nav-item dropdown order-md-last">
-      <a href="#" class="nav-link d-flex align-items-center" data-bs-toggle="dropdown">
-        <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
-        <div class="d-none d-md-block ps-2">
-          <div><?= $_SESSION['nama'] ?></div>
-          <div class="mt-1 small text-secondary"><?= $_SESSION['divisi'] ?></div>
-        </div>
-      </a>
-      <div class="dropdown-menu dropdown-menu-end">
-        <a href="<?= base_url('mahasiswa/fitur_lainnya/profile.php') ?>" class="dropdown-item">Profile</a>
-        <a href="<?= base_url('mahasiswa/fitur_lainnya/ubah_password.php') ?>" class="dropdown-item">Ubah Password</a>
-        <a href="<?= base_url('auth/logout.php') ?>" class="dropdown-item text-danger">Logout</a>
-      </div>
-    </div>
+   <a href="#" class="nav-link d-flex align-items-center" data-bs-toggle="dropdown">
+     <span class="avatar avatar-sm" 
+           style="background-image: url('<?= base_url('assets/img/foto_mahasiswa/' . $_SESSION['foto']) ?>')">
+     </span>
+     <div class="d-none d-md-block ps-2">
+       <div><?= $_SESSION['nama'] ?></div>
+       <div class="mt-1 small text-secondary"><?= $_SESSION['divisi'] ?></div>
+     </div>
+   </a>
+   <div class="dropdown-menu dropdown-menu-end">
+     <a href="<?= base_url('mahasiswa/fitur_lainnya/profile.php') ?>" class="dropdown-item">Profile</a>
+     <a href="<?= base_url('mahasiswa/fitur_lainnya/ubah_password.php') ?>" class="dropdown-item">Ubah Password</a>
+     <a href="<?= base_url('auth/logout.php') ?>" class="dropdown-item text-danger">Logout</a>
+   </div>
+</div>
+
 
     <!-- Navbar Items -->
     <div class="collapse navbar-collapse" id="navbar-menu">
