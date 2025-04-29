@@ -11,7 +11,7 @@ require_once('../../config.php')
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+  <title>PRISMA</title>
   <!-- CSS files -->
   <link href="<?php echo base_url('assets/css/tabler.min.css'); ?>" rel="stylesheet" />
   <link href="<?php echo base_url('assets/css/tabler-vendors.min.css'); ?>" rel="stylesheet" />
@@ -72,15 +72,16 @@ require_once('../../config.php')
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
         
-        <!-- Logo di Desktop -->
-        <a class="navbar-brand d-none d-md-block" href=".">
-          <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="110" height="32" alt="Logo">
-        </a>
+       <!-- Logo di Desktop -->
+<span class="navbar-brand d-none d-md-block">
+  <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="110" height="32" alt="Logo">
+</span>
 
-        <!-- Logo di Mobile -->
-        <a class="navbar-brand mx-auto d-md-none" href=".">
-          <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="90" height="28" alt="Logo">
-        </a>
+<!-- Logo di Mobile -->
+<span class="navbar-brand mx-auto d-md-none">
+  <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="90" height="28" alt="Logo">
+</span>
+
         
         </h1>
         <div class="navbar-nav flex-row order-md-last">

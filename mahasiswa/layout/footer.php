@@ -1,6 +1,4 @@
-<footer class="footer footer-transparent d-print-none">
-        
-        </footer>
+
       </div>
     </div>
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">

@@ -72,15 +72,16 @@ require_once ('../../config.php') ?>
       <span class="close-icon" style="font-size: 30px; display: none;">&times;</span>
     </button>
 
-    <!-- Logo di Desktop -->
-    <a class="navbar-brand d-none d-md-block" href=".">
+      <!-- Logo di Desktop -->
+    <div class="navbar-brand d-none d-md-block">
       <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="110" height="32" alt="Logo">
-    </a>
+    </div>
 
     <!-- Logo di Mobile -->
-    <a class="navbar-brand mx-auto d-md-none" href=".">
+    <div class="navbar-brand mx-auto d-md-none">
       <img src="<?= base_url('assets/img/PRISMA.png') ?>" width="90" height="28" alt="Logo">
-    </a>
+    </div>
+
 
     <!-- Profil User (Tetap Muncul di Header) -->
     <div class="nav-item dropdown order-md-last">

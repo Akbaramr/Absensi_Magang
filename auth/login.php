@@ -54,7 +54,7 @@ session_start();
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-    <title>Sign in with illustration - Tabler</title>
+    <title>PRISMA - Login</title>
     <!-- Bootstrap CSS -->
     <link href="<?= base_url('assets/css/tabler.min.css'); ?>" rel="stylesheet"/>
     <link href="<?= base_url('assets/css/tabler-vendors.min.css'); ?>" rel="stylesheet"/>
@@ -113,14 +113,6 @@ session_start();
 
             </div>
           </div>
-
-          <!-- Gambar hanya tampil di layar besar -->
-          <div class="col-lg-6 d-none d-lg-block">
-            <img src="<?= base_url('assets/img/undraw_secure_login_pdn4.svg') ?>" height="300" class="d-block mx-auto" alt="">
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- JS Dependencies -->
     <script src="<?= base_url('assets/js/tabler.min.js') ?>" defer></script>
