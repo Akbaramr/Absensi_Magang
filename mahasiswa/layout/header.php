@@ -57,7 +57,7 @@ require_once ('../../config.php') ?>
 
     </style>
   </head>
-  <body >
+  <body>
     <script src="./dist/js/demo-theme.min.js?1692870487"></script>
     <div class="page">
 

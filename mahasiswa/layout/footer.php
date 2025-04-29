@@ -1,6 +1,12 @@
+<footer class="mt-auto py-3" style="background-color: #343a40;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; color: #adb5bd; font-size: 12px;">
+    <img src="<?= base_url('assets/img/Logo_Fikom.png') ?>" 
+         alt="Logo FIKOM" 
+         style="height: 35px; filter: brightness(0) invert(1);">
+    <span>© <?= date('Y') ?> Sistem Presensi Mahasiswa — Dibuat oleh Mahasiswa Magang FIKOM UMI</span>
+  </div>
+</footer>
 
-      </div>
-    </div>
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
